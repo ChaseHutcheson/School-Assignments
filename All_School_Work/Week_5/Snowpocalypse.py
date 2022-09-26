@@ -1,6 +1,7 @@
 import os
 import requests
 from bs4 import BeautifulSoup
+import re
 #Clears Terminal
 os.system('cls')
 
@@ -12,12 +13,13 @@ req = requests.get("https://www.msn.com/en-us/weather/forecast/in-?loc=eyJ0IjoxL
 soup = BeautifulSoup(req.content, "html.parser")
 
 #appends only text from data
-all_data.append(soup.get_text())
+temp_nums = soup.get_text()
+pattern = "[1-9]+"
 
-for i in range(len(all_data)):
-    possible_temps = 0
-    numbers = all_data.find(str(possible_temps))
-    all_data.append(numbers)
-    possible_temps = possible_temps + 1
+x = (re.findall(pattern, temp_nums))
+
+for i in range(len(x)):
+    if int(x[i]) > 100:
+        all_data.append(x[i])
 
 print(all_data)
