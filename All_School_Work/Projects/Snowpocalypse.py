@@ -19,9 +19,10 @@ new_temps_list = []
 precip_list = []
 new_precip_list = []
 final_Sentences = []
+new_new_temps_list = []
 
 #Url
-url = "https://weather.com/weather/tenday/l/08bd50a1176f54984872ff805fdff0dff19c2d1543f8aa72dc2f88ccd6c538d9#detailIndex5"
+url = "https://weather.com/weather/tenday/l/a8a773c1131ec60a85f18011fa5a5107860346c067977bf3d8d25946a6c3a500"
 response = get(url)
 
 #Function to pull HTML
@@ -48,6 +49,10 @@ for i in range(len(temps_list)):
     new_temps = str(temps_list[i]).split("/")
     new_temps_list.append(new_temps)
 
+for i in range(len(new_temps_list)):
+    new_temps_list[i][0] = new_temps_list[i][0].split("°")
+    new_temps_list[i][1] = new_temps_list[i][1].split("°")
+
 for i in range(len(precip_list)):
     new_precip = str(precip_list[i]).split("Rain")
     new_precip_list.append(new_precip)
@@ -55,9 +60,20 @@ for i in range(len(precip_list)):
 #Prints all dates and temps and reain chances
 for i in range(len(temp_days)):
     if i == 0:
-        final_Sentences.append(f"{temp_days_list[i]}, The temp is going to be a high of {new_temps_list[i][0]} degrees with a low of {new_temps_list[i][1]} and a {new_precip_list[i][1]} chance of Rain")
+        if int(new_temps_list[i][1][0]) <= 32:
+            final_Sentences.append(f"{temp_days_list[i]}, The temp is going to be a high of {new_temps_list[i][0][0]} degrees with a low of {new_temps_list[i][1][0]} and a {new_precip_list[i][1]} chance of Snow.")
+
+        else:
+            final_Sentences.append(f"{temp_days_list[i]}, The temp is going to be a high of {new_temps_list[i][0][0]} degrees with a low of {new_temps_list[i][1][0]} and a {new_precip_list[i][1]} chance of Rain.")
+
+
     if  i > 0:
-        final_Sentences.append(f" On {temp_days_list[i]}, The temp is going to be a high of {new_temps_list[i][0]} degrees with a low of {new_temps_list[i][1]} and a {new_precip_list[i][1]} chance of Rain")
+        if int(new_temps_list[i][1][0]) <= 32:
+            final_Sentences.append(f" On {temp_days_list[i]}, The temp is going to be a high of {new_temps_list[i][0][0]} degrees with a low of {new_temps_list[i][1][0]} and a {new_precip_list[i][1]} Snow.")
+
+        else:
+            final_Sentences.append(f"On {temp_days_list[i]}, The temp is going to be a high of {new_temps_list[i][0][0]} degrees with a low of {new_temps_list[i][1][0]} and a {new_precip_list[i][1]} chance of Rain.")
+
     
 auth = tweepy.OAuthHandler("TUDlkN5VLnLRBxZQXgfGAP6wn", "exOIcTdVcdhgCysqLzy6Bk403TUw1htQXIsWVtkbhAS5YUgPj5")
 auth.set_access_token("1575153918291517440-31zRsR6Kt7Pjfvu8qb5YmHtW9pDN7I", "weYfuAwGNsIbAaJJcI6FPmNA3m4hJjM4E8mE6RQicu14p")
@@ -67,6 +83,5 @@ api = tweepy.API(auth)
 
 #Create a tweet
 for i in range(len(final_Sentences)):
-    api.update_status(final_Sentences[0])
-    api.update_status(final_Sentences[1])
-    sleep(86400)
+   api.update_status(final_Sentences[0])
+   api.update_status(final_Sentences[1])
