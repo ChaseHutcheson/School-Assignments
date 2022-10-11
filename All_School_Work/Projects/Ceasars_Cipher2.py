@@ -7,7 +7,7 @@ shiftedlist = []
 encrypted = []
 listcheck = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
 spacecheck = [-64, -63, -62, -61, -60, -59, -58, -57, -56, -55, -54, -53, -52, -51, -50, -49, -48, -47, -46, -45, -44, -43, -42, -41, -40, -39, -38, ]
-not_encrypted = input("Enter a phrase (NO NUMBERS, CAPS OR SPECIAL CHARACTERS)")
+not_encrypted = input("Enter a phrase (NO NUMBERS , CAPS OR SPECIAL CHARACTERS)")
 shiftamount = int(input("How much do you want to shift by (1-25): "))
 
 #converts letters to numbers
