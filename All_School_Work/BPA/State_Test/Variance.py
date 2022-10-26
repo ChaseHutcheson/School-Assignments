@@ -1,21 +1,25 @@
-import math
+from genericpath import isfile
+from importlib.resources import path
+import os
 import statistics
+from unittest import result
 
-def Calculate(grillFile):
+
+
+def Calculate():
     #Define Variables
-    grillTemps = []
     highestTemp = 0
     lowestTemp = 100000
     tempTotal = 0
-    tempMean = None
-
-    #Pulls Temps
+    grillFile = "All_School_Work\\BPA\\State_Test\\Grill_1.txt"
+    grillTemps = []
     grill = open(grillFile)
     with grill as f:
         for line in f:
             for word in line.split():
                 grillTemps.append(int(word))
-    
+
+
     #Finds Highest
     for i in range(len(grillTemps)):
         if int(grillTemps[i]) > highestTemp:
@@ -31,17 +35,44 @@ def Calculate(grillFile):
         tempTotal = tempTotal + int(grillTemps[i])
     tempMean = tempTotal / len(grillTemps)
 
-    #Gets Grill Number
-    print(str(grillFile).split("All_School_Work\BPA\State_Test\Grill_"))
+    #Gets Deviation
+    deviation = statistics.stdev(grillTemps)
+
+    #Gets Name
+    grillname = grillFile.replace('All_School_Work\\BPA\\State_Test\\Grill_', '')
+    grillname = grillname.replace('.txt', '')
+    grillFile = grillFile.replace("1", str(int(grillname) + 1))
     
+    return grillname, lowestTemp, highestTemp, tempMean, deviation, grillTemps
+    grillname + 1
 
-#     print(f"""
-# Min: {lowestTemp}
-# Max: {highestTemp}
-# Mean: {tempMean}
-# Standard Deviation of temps is {statistics.stdev(grillTemps)}
-#     """)
+def Print():
+    Calculate()
+    for i in range(len(Calculate()[5])):
+        if (int(Calculate()[5][i] - int(Calculate()[3]) > (int(Calculate()[4]) * 2))):
+            result = "Fail"
+            whyResult = "Too Hot: "
+        if (int(Calculate()[5][i]) - int(Calculate()[3]) < (int(Calculate()[4]) * 2)):
+            result = "Fail"
+            whyResult = "Too Cold: "
+        if (int(Calculate()[5][i]) - int(Calculate()[3])) == (int(Calculate()[4]) * 2):
+            result = "Fail"
+            whyResult = "Too Hot and Too Cold: "
+        else:
+            result = "Pass!"
+            whyResult = ""
 
+    print(f"""
+    Grill {Calculate()[0]}
+    Min: {Calculate()[1]}
+    Max: {Calculate()[2]}
+    Mean {Calculate()[3]}
+    Standard Deveiation of temps is {Calculate()[4]}
+    {whyResult}{result}
+    """)
 
-
-Calculate("All_School_Work\BPA\State_Test\Grill_1.txt")
+Print()
+Print()
+Print()
+Print()
+Print()
