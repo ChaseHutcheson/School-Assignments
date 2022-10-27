@@ -54,10 +54,10 @@ for path in os.listdir(dir_path):
             elif (int(grillTemps[i]) - int(tempMean) > int(deviation) * 2):
                 result = "Fail! "
                 whyResult = "Too Cold: "
-            elif (int(grillTemps[i]) - int(tempMean) > (tempMean) * 2) or (int(grillTemps[i]) - int(tempMean) > int(deviation) * 2):
+            elif (int(grillTemps[i]) - int(tempMean) > (deviation) * 2) and (int(grillTemps[i]) - int(tempMean) < int(deviation) * 2):
                 result = "Fail! "
                 whyResult = "Too Hot and Too Cold: "
-            else:
+            if  (int(grillTemps[i]) - int(tempMean) < (deviation) * 2) and (int(grillTemps[i]) - int(tempMean) > int(deviation) * 2):
                 result = "Pass! "
                 whyResult = ""
 
