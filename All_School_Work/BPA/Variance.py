@@ -68,18 +68,19 @@ for path in os.listdir(dir_path):
 
         result = ""
         whyResult = ""
-        for i in range(len(grillTemps)):
-            calc = int(grillTemps[i]) - int(tempMean) <= int(deviation) * 2
-
-            if (calc - 2) <= (deviation * 2) and (calc + 2) >= (deviation * 2):
-                result = "Pass!"
-                whyResult = ""
-            elif (calc - 2) > (deviation * 2):
-                result = "Fail!"
-                whyResult = "Too Hot "
-            elif (calc - 2) < (deviation * 2):
-                result = "Fail!"
-                whyResult = "Too Cold "
+        if (tempMean - (deviation*2)) >= (lowestTemp) and (tempMean + (deviation*2)) <= (highestTemp):
+            result = "Pass!"
+            whyResult = ""
+        elif (tempMean - (deviation*2)) < (lowestTemp):
+            result = "Fail!"
+            whyResult = "Too Cold: "
+        elif (tempMean + (deviation*2)) > (highestTemp):
+            result = "Fail!"
+            whyResult = "Too Hot: "
+        elif (tempMean + (deviation*2)) > (highestTemp) and (tempMean + (deviation*2)) > (highestTemp):
+            result = "Fail!"
+            whyResult = "Too Hot and Too Cold: "
+                
 
         return result, whyResult, grillname, lowestTemp, highestTemp, tempMean, deviation, grillTemps
 
