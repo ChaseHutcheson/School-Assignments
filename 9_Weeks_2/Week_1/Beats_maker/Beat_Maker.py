@@ -2,6 +2,7 @@ import pygame
 from pygame import mixer
 pygame.init()
 
+# Define all needed colors and sizes
 Width = 1400
 Height = 800
 black = (0, 0, 0)
@@ -13,12 +14,13 @@ green = (0, 255, 0)
 gold = (212, 175, 55)
 blue = (0, 255, 255)
 
-
+# Creats Background and Defines Fonts
 screen = pygame.display.set_mode([Width, Height])
 pygame.display.set_caption('Beat Maker')
 label_font = pygame.font.Font('freesansbold.ttf', 32)
 medium_font = pygame.font.Font('freesansbold.ttf', 24)
 
+#Defines all active variables
 index = 100
 fps = 60
 timer = pygame.time.Clock()
@@ -41,7 +43,7 @@ for line in file:
 beat_name = ''
 typing = False
 
-
+#Defines soundes needed
 Riff1 = mixer.Sound('9_Weeks_2\Week_1\sounds\\New Love Buzz Riff 1.WAV')
 Riff2 = mixer.Sound('9_Weeks_2\Week_1\sounds\\New Love Buzz Riff 2.wav')
 Drums1 = mixer.Sound('9_Weeks_2\Week_1\sounds\\New Love Buzz Drums.wav')
@@ -53,7 +55,7 @@ Bass2 = mixer.Sound('9_Weeks_2\Week_1\sounds\Love Buzz Bass.wav')
 
 pygame.mixer.set_num_channels(instruments * 3)
 
-
+#Function That tells the Audio to play when a square is labeled active
 def play_notes():
     for i in range(len(clicked)):
         if clicked[i][active_beat] == 1 and active_list[i] == 1:
@@ -73,7 +75,7 @@ def play_notes():
             if i == 7:
                 Bass2.play()
 
-
+#Draws the UI
 def draw_grid(clicks, beat, actives):
     left_box = pygame.draw.rect(screen, grey, [0, 0, 200, Height - 200], 5)
     bottom_box = pygame.draw.rect(screen, grey, [0, Height - 200, Width, 200], 5)
@@ -118,7 +120,7 @@ def draw_grid(clicks, beat, actives):
         active = pygame.draw.rect(screen, blue, [beat * ((Width - 200)//beats) + 200, 0, ((Width - 200)//beats), instruments * 75], 5, 3)
     return boxes
 
-
+#Draws the UI screen
 def draw_save_menu(beat_name, typing):
     pygame.draw.rect(screen, black, [0, 0, Width, Height])
     menu_text = label_font.render('SAVE MENU: Enter a Name for Current Beat!', True, white)
@@ -136,7 +138,7 @@ def draw_save_menu(beat_name, typing):
     screen.blit(entry_text, (430, 250))
     return exit_btn, saving_btn, entry_rect
 
-
+#Draws Loading Screen and Loads in by slicing up Strings from saved_beats.txt to find bpm, clicked blocks, beats, etc.
 def draw_load_menu(index):
     loaded_clicked = []
     loaded_beats = 0
@@ -194,12 +196,14 @@ while run:
     play_text = label_font.render('Play/Pause', True, white)
     screen.blit(play_text, (70, Height - 130))
 
+# Draws Play/Pause Button
     if playing:
         play_text2 = medium_font.render('Playing', True, dark_grey)
     else:
         play_text2 = medium_font.render('Paused', True, dark_grey)
     screen.blit(play_text2, (70, Height - 100))
 
+# Draws Bpm info and draws +5 and -5 Bpm buttons
     bpm_rect = pygame.draw.rect(screen, grey, [300, Height - 150, 220, 100], 5, 5)
     bpm_text = medium_font.render("Beats Per Minute", True, white)
     screen.blit(bpm_text, (308, Height - 130))
@@ -212,6 +216,7 @@ while run:
     screen.blit(add_text, [535, Height - 140])
     screen.blit(sub_text, [535, Height - 90])
 
+# Draws Beat info and draws +1 and -1 Beat buttons
     beats_rect = pygame.draw.rect(screen, grey, [600, Height - 150, 220, 100], 5, 5)
     beats_text = medium_font.render("Beats in Loop", True, white)
     screen.blit(beats_text, (618, Height - 130))
@@ -228,7 +233,7 @@ while run:
     for i in range(instruments):
         rect = pygame.rect.Rect((0, i * 75), (170, 50))
         instrument_rects.append(rect)
-
+# Draws Save buttons and Load Button
     save_button = pygame.draw.rect(screen, grey, (900, Height - 150, 200, 48), 0, 5)
     save_text = label_font.render('Save Beat', True, white)
     screen.blit(save_text, (920, Height - 140))
@@ -240,6 +245,7 @@ while run:
     clear_text = label_font.render('Clear Board', True, white)
     screen.blit(clear_text, (1155,  Height - 120))
 
+# If save or load screens are active, pull values from their respective functions
     if save_menu:
         exit_button, saving_button, entry_rectangle = draw_save_menu(beat_name, typing)
     if load_menu:
@@ -257,17 +263,19 @@ while run:
                 if boxes[i][0].collidepoint(event.pos):
                     coords = boxes[i][1]
                     clicked[coords[1]][coords[0]] *= -1
-
+# If the mouse clicks the play pause button without the save or laod menu being up, # it'll pause, if its not playing, it'll un pause
         if event.type == pygame.MOUSEBUTTONUP and not save_menu and not load_menu:
             if play_pause.collidepoint(event.pos):
                 if playing:
                     playing = False
                 elif not playing:
                     playing = True
+# If you hit the +5 or -5 buttons, the bpm will increase or decrease by 5
             elif bpm_add_rect.collidepoint(event.pos):
                 bpm += 5
             elif bpm_sub_rect.collidepoint(event.pos):
                 bpm -= 5
+# If you hit the +1 or -1 buttons, the beats will increase or decrease by 1
             elif beats_add_rect.collidepoint(event.pos):
                 beats += 1
                 for i in range(len(clicked)):
@@ -276,15 +284,20 @@ while run:
                 beats -= 1
                 for i in range(len(clicked)):
                     clicked[i].pop(-1)
+# if you hit the clear button, all active buttons will unactivate
             elif clear_button.collidepoint(event.pos):
                 clicked = [[-1 for _ in range(beats)] for _ in range(instruments)]
+# if you hit the "Save Beat" button, the program determines that its open
             elif save_button.collidepoint(event.pos):
                 save_menu = True
+# if you hit the "Load Beat" button, the program determines that its open
             elif load_button.collidepoint(event.pos):
                 load_menu = True
+# if you click on an instruments rectangle it wil deactivate all of its active notes
             for i in range(len(instrument_rects)):
                 if instrument_rects[i].collidepoint(event.pos):
                     active_list[i] *= -1
+# if you hit the exit button, the current menu will close
         elif event.type == pygame.MOUSEBUTTONUP:
             if exit_button.collidepoint(event.pos):
                 save_menu = False
@@ -292,6 +305,9 @@ while run:
                 playing = True
                 beat_name = ''
                 typing - False
+# if hit a in the load menu song, the loaded rectangle highlights it 
+# if you hit the delete button while the beats highlighted, the string is poped frome saved_beats.
+#  If you hit the load button while the beats highlighted, the current values are overwritten
             if load_menu:
                 if loaded_rectangle.collidepoint(event.pos):
                     index = (event.pos[1] - 100) // 50
@@ -305,6 +321,9 @@ while run:
                         clicked = loaded_info[2]
                         index = 100
                         load_menu = False
+# If you click on the entry prompt in the save menu, the box highlights to show its selected 
+# If the box is highlighted, the program sets typing to true
+# If you click save after typing, the program opens the saved beats file ans writes down all the data into a string
             if save_menu:
                 if entry_rectangle.collidepoint(event.pos):
                     if typing:
@@ -320,7 +339,8 @@ while run:
                         save_menu = False
                         typing = False
                         beat_name = ''
-
+# If you input text into the box, the beat name is what you put down
+# If you hit backspace, The beatname will only save/ display everything after the backspace
         if event.type == pygame.TEXTINPUT and typing:
             beat_name += event.text
         if event.type == pygame.KEYDOWN:
@@ -329,6 +349,11 @@ while run:
 
     beat_length = 3600 // bpm
 
+# If the active length is less than beat length while its playing, active length increases by 1
+# If active is is equal to or greater than beat length, active length is set to 0
+# if active length is then less than beats - 1, 1 is added active length and beat_changed is equal to true
+# if active length is less than beat length and beats, its set to 0 and beat changed is equal to true
+# This moves the blue player rectangle across the notes
     if playing:
         if active_length < beat_length:
             active_length += 1
