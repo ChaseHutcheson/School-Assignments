@@ -60,7 +60,7 @@ def play_notes():
             if i == 0:
                 Riff1.play()
             if i == 1:
-                Riff2.set_volume(.75)
+                Riff2.set_volume(.35)
                 Riff2.play()
             if i == 2:
                 Drums1.play()
