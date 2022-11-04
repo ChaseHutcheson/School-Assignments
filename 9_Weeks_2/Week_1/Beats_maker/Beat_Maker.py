@@ -44,12 +44,12 @@ typing = False
 
 hi_hat = mixer.Sound('9_Weeks_2\Week_1\sounds\hi hat.WAV')
 snare = mixer.Sound('9_Weeks_2\Week_1\sounds\snare.WAV')
-kick = mixer.Sound('9_Weeks_2\Week_1\sounds\kick.WAV')
-crash = mixer.Sound('9_Weeks_2\Week_1\sounds\crash.wav')
-clap = mixer.Sound('9_Weeks_2\Week_1\sounds\clap.wav')
-tom = mixer.Sound('9_Weeks_2\Week_1\sounds\\tom.WAV')
-bass_E = mixer.Sound('9_Weeks_2\Week_1\sounds\Love Buzz Bass E.wav')
-bass_E_riff = mixer.Sound('9_Weeks_2\Week_1\sounds\Love Buzz Bass Riff.wav')
+kick = mixer.Sound('9_Weeks_2\Week_1\sounds\Love Buzz Bridge.wav')
+crash = mixer.Sound('9_Weeks_2\Week_1\sounds\Riff.wav')
+clap = mixer.Sound('9_Weeks_2\Week_1\sounds\Love Buzz Verse Drums.wav')
+tom = mixer.Sound('9_Weeks_2\Week_1\sounds\Love Buzz Drums.wav')
+bass = mixer.Sound('9_Weeks_2\Week_1\sounds\Love Buzz Bass.wav')
+
 
 pygame.mixer.set_num_channels(instruments * 3)
 
@@ -70,12 +70,8 @@ def play_notes():
             if i == 5:
                 tom.play()
             if i == 6:
-                bass_E.set_volume(.50)
-                bass_E.play()
-            if i == 7:
-                bass_E_riff.set_volume(.50)
-                bass_E_riff.play()
-
+                bass.set_volume(.50)
+                bass.play()
 
 
 def draw_grid(clicks, beat, actives):
@@ -87,16 +83,16 @@ def draw_grid(clicks, beat, actives):
     screen.blit(hi_hat_text, (30, 15))
     snare_text = label_font.render('Snare', True, colors[actives[1]])
     screen.blit(snare_text, (30, 65))
-    kick_text = label_font.render('Bass Drum', True, colors[actives[2]])
+    kick_text = label_font.render('Bridge', True, colors[actives[2]])
     screen.blit(kick_text, (17, 115))
-    Crash_text = label_font.render('Crash', True, colors[actives[3]])
+    Crash_text = label_font.render('Riff', True, colors[actives[3]])
     screen.blit(Crash_text, (30, 165))
-    clap_text = label_font.render('Clap', True, colors[actives[4]])
+    clap_text = label_font.render('Verse Drums', True, colors[actives[4]])
     screen.blit(clap_text, (30, 215))
-    floor_text = label_font.render('Floor Tom', True, colors[actives[5]])
+    floor_text = label_font.render('Drums', True, colors[actives[5]])
     screen.blit(floor_text, (30, 265))
-    bassE = label_font.render('Bass E', True, colors[actives[5]])
-    screen.blit(bassE, (30, 580))
+    bassE = label_font.render('Bass', True, colors[actives[5]])
+    screen.blit(bassE, (30, 315))
     for i in range(instruments):
         pygame.draw.line(screen, grey, (0, (i * 50) + 50), (200, (i * 50) + 50), 3)
     
@@ -117,7 +113,7 @@ def draw_grid(clicks, beat, actives):
             
             boxes.append((rect, (i, j)))
 
-        active = pygame.draw.rect(screen, blue, [beat * ((Width - 200)//beats) + 200, 0, ((Width - 200)//beats), instruments * 100], 5, 3)
+        active = pygame.draw.rect(screen, blue, [beat * ((Width - 200)//beats) + 200, 0, ((Width - 200)//beats), instruments * 50], 5, 3)
     return boxes
 
 
@@ -228,7 +224,7 @@ while run:
 
     instrument_rects = []
     for i in range(instruments):
-        rect = pygame.rect.Rect((0, i * 100), (200, 100))
+        rect = pygame.rect.Rect((0, i * 75), (170, 50))
         instrument_rects.append(rect)
 
     save_button = pygame.draw.rect(screen, grey, (900, Height - 150, 200, 48), 0, 5)
