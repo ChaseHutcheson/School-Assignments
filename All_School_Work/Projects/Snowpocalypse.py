@@ -59,14 +59,15 @@ for i in range(len(temp_days)):
     if  i > 0:
         final_Sentences.append(f" On {temp_days_list[i]}, The tempurature is going to be a high of {new_temps_list[i][0]} degrees with a low of {new_temps_list[i][1]} and a {new_precip_list[i][1]} chance of Rain")
     
-auth = tweepy.OAuthHandler("TUDlkN5VLnLRBxZQXgfGAP6wn", "exOIcTdVcdhgCysqLzy6Bk403TUw1htQXIsWVtkbhAS5YUgPj5")
-auth.set_access_token("1575153918291517440-31zRsR6Kt7Pjfvu8qb5YmHtW9pDN7I", "weYfuAwGNsIbAaJJcI6FPmNA3m4hJjM4E8mE6RQicu14p")
+# auth = tweepy.OAuthHandler("TUDlkN5VLnLRBxZQXgfGAP6wn", "exOIcTdVcdhgCysqLzy6Bk403TUw1htQXIsWVtkbhAS5YUgPj5")
+# auth.set_access_token("1575153918291517440-31zRsR6Kt7Pjfvu8qb5YmHtW9pDN7I", "weYfuAwGNsIbAaJJcI6FPmNA3m4hJjM4E8mE6RQicu14p")
 
-#Create API object
-api = tweepy.API(auth)
+# #Create API object
+# api = tweepy.API(auth)
 
-#Create a tweet
-#api.update_status(final_Sentences[1])
-#sleep(60)
-#api.update_status(final_Sentences[2])
+# #Create a tweet
+# #api.update_status(final_Sentences[1])
+# #sleep(60)
+# #api.update_status(final_Sentences[2])
  
+print(final_Sentences)
