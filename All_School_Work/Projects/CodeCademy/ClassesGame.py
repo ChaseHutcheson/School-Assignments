@@ -1,52 +1,55 @@
-#!! Towe Defense !!#
+#! Fighting Sandbox !#
 
-import random
-    
-class Weapon:
-  def __init__(self, name, ammo, damage):
+class Player:
+  def __init__(self, name, weapon, speed):
     self.name = name
-    self.ammo = ammo
+    self.weapon = weapon
+    self.speed = speed
+    self.damage = 0
+    if self.weapon == "Sword" or self.weapon == "sword":
+      self.speed = self.speed + 2
+      self.damage = 30
+    if self.weapon == "Mace" or self.weapon == "mace":
+      self.speed = self.speed - 4
+      self.damage = 60
+    else:
+      self.speed = self.speed + 9
+      self.damage = 5
+
+  def __repr__(self):
+    return f"Your name is {self.name}. You are equip with a {self.weapon} that deals {self.damage} damage and your speed it {self.speed}."
+
+  def no_option(self):
+    print(f"Thats not an option {self.name}. Try again. ")
+
+  def attack_boss(self):
+    print(f"You swing your {self.weapon} at the your enemy")
+
+class Boss:
+  def __init__(self, type, speed, damage):
+    self.type = type
+    self.speed = speed
     self.damage = damage
 
   def __repr__(self):
-    print("You Choose the {name}. It has {ammo} rounds and causes {damage}".format(name = self.name))
+    return f"Your enemy is a {self.type} type. Its speed is {self.speed} and its damage is {self.damage}."
 
 
-  def reload(self):
-    self.ammo == self.ammo + 1
-    print("You Reloaded a bullet")
+player_name = input("Welcome. Whats your name? ")
+player_weapon = input("What Weapon would you like? Sword (DMG: 30, SPD: +2) or a Mace (DMG: 60 ,SPD: -4)? ")
+player_speed = int(input("What is your speed (1-10)? "))
 
-class Player:
-  def __init__(self, name, weapon, shots_left):
-    self.name = name
-    self.weapon = weapon
-    self.shots_left = shots_left
+boss_type = input("What type of beast would you like to fight (Fire, Water, Wind)? ")
+boss_damage = int(input("What is your desired enemy damage (1-10)? "))
+boss_speed = int(input("What is your desired enemy speed (1-10)? "))
 
-  def __repr__(self):
-    return ""
+player = Player(player_name, player_weapon, player_speed)
+boss = Boss(boss_type, boss_speed, boss_damage)
 
-  def fire(self):
-    killed_enemies = random.radint(1, 250)
-    self.ammo = self.ammo - 1
-    print(f"Your Fired your weapon and killed {killed_enemies} enemies. Ammo is now {self.ammo}")
+print(player)
+print(boss)
 
-player_name = input("Hey! Whats your name soldier? ")
-player_weapon = input("On your feet " + str(player_name) + "! Grab a weapon to defened the tower! Which one do you want? Rifle, Sniper or RPG? ")
+choice = input('What your move (Attack, Heal or Dodge)')
 
-
-if player_weapon != "Rifle" and player_weapon != "Sniper" and player_weapon != "RPG":
-    player_weapon = input("Thats Not an option " + str(player_name) + "! Which one do you want? Rifle, Sniper or RPG? ")
-
-elif player_weapon == "Rifle":
-    Weapon("rifle", "60", "20")
-
-elif player_weapon == "Sniper":
-    Weapon("sniper", "15", "60")
-    
-    
-elif player_weapon == "RPG":
-    Weapon("rpg", "2", "2000")
-    
-
-player = Player(player_name, player_weapon, 0)
-
+while choice != "Attack" and choice != "attack" and choice != "Heal" and choice != "heal" and choice != "Dodge" and choice != "dodge":
+  player.no_option()
