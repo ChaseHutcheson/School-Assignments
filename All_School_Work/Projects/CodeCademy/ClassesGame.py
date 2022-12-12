@@ -1,52 +1,51 @@
-#!! Towe Defense !!#
+#! Fighting Sandbox !#
 
-import random
-    
-class Weapon:
-  def __init__(self, name, ammo, damage):
-    self.name = name
-    self.ammo = ammo
-    self.damage = damage
-
-  def __repr__(self):
-    print("You Choose the {name}. It has {ammo} rounds and causes {damage}".format(name = self.name))
-
-
-  def reload(self):
-    self.ammo == self.ammo + 1
-    print("You Reloaded a bullet")
-
-class Player:
-  def __init__(self, name, weapon, shots_left):
+class Chars:
+  def __init__(self, name, weapon, speed, health = 100):
     self.name = name
     self.weapon = weapon
-    self.shots_left = shots_left
-
+    self.speed = speed
+    if weapon == "Sword" or weapon == "sword":
+      self.weapondamage = 30
+      self.speed = str(int(self.speed) + 2)
+    if weapon == "Mace" or weapon == "mace":
+      self.weapondamage = 50
+      self.speed = str(int(self.speed) - 2)
+    self.health = health
+  
   def __repr__(self):
-    return ""
+    return f"Your Name is {self.name}. You have a speed of {self.speed} and are equip with a {self.weapon}."
 
-  def fire(self):
-    killed_enemies = random.radint(1, 250)
-    self.ammo = self.ammo - 1
-    print(f"Your Fired your weapon and killed {killed_enemies} enemies. Ammo is now {self.ammo}")
+  def attack_boss(self):
+    print(f"you swing your {self.weapon} at the beast!")
 
-player_name = input("Hey! Whats your name soldier? ")
-player_weapon = input("On your feet " + str(player_name) + "! Grab a weapon to defened the tower! Which one do you want? Rifle, Sniper or RPG? ")
+class Boss:
+  def __init__(self, type, damage, speed):
+    self.type = type
+    self.damage = damage
+    self.speed = speed
+  
+  def __repr__(self):
+    return f"Your enemy is a {self.type} type. A beast with a speed of {self.speed} and causes {self.damage} damage per hit."
+
+  def attack_player(self):
+    print(f"The beast used a {self.type} attack!")
 
 
-if player_weapon != "Rifle" and player_weapon != "Sniper" and player_weapon != "RPG":
-    player_weapon = input("Thats Not an option " + str(player_name) + "! Which one do you want? Rifle, Sniper or RPG? ")
+player1_name = input("Welcome to The Ring. Whats your name player? ")
+player1_speed = int(input("On a scale of one to ten, how fast are you? "))
+player1_damage= input("What weapon do you want? a Sword (dmg: 30 spd: +2) or a Mace (dmg: 50 spd: -2)? ")
 
-elif player_weapon == "Rifle":
-    Weapon("rifle", "60", "20")
+player1 = Chars(player1_name, player1_damage, player1_speed)
 
-elif player_weapon == "Sniper":
-    Weapon("sniper", "15", "60")
-    
-    
-elif player_weapon == "RPG":
-    Weapon("rpg", "2", "2000")
-    
+boss_type = input("What enemy type would you like to fight (Fire, Wind or Water)? ")
+boss_speed = int(input("On a scale of one to ten, how fast do you want it? "))
+boss_damage= int(input("On a scale of one to ten, how strong do you want it? "))
 
-player = Player(player_name, player_weapon, 0)
+boss = Boss(boss_type, boss_damage, boss_speed)
 
+print(player1)
+print(boss)
+
+player1.attack_boss()
+boss.attack_player()
