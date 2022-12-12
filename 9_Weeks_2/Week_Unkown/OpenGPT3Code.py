@@ -19,12 +19,12 @@ forecast_container = soup.find(class_="DailyForecast--DisclosureList--nosQS")
 forecast_data = []
  
 # Loop through each row in the forecast table
-for row in forecast_container.find_all("tr"):
+for row in forecast_container.find_all(""):
   # Create an empty dictionary to store the forecast data for each day
   day_data = {}
  
   # Loop through each cell in the row
-  for cell in row.find_all("td"):
+  for cell in row.find_all("DaypartDetails--DayPartDetail--2XOOV Disclosure--themeList--1Dz21"):
     # Get the forecast date and store it in the dictionary
     if cell.get("headers")[0] == "date":
       day_data["date"] = cell.text
