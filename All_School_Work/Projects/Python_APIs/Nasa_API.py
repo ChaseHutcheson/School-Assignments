@@ -1,7 +1,7 @@
 import requests
 #API KEY: ojrrlXJErN3MvJrx6ddCMuLFPuKQfyGFUyuuYlbp
 
-response = requests.get("https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=4000&camera=pancam&api_key=ojrrlXJErN3MvJrx6ddCMuLFPuKQfyGFUyuuYlbp")
+response = requests.get("https://api.nasa.gov/mars-photos/api/v1/rovers/opportunity/photos?sol=5000&camera=pancam&api_key=ojrrlXJErN3MvJrx6ddCMuLFPuKQfyGFUyuuYlbp")
 request = response.request
 
 nasaAPI = response.json()
@@ -19,8 +19,8 @@ combinedData = []
 
 for i in range(len(nasaPhotos)):
     combinedData.append({
-        "imgLink" : images[i],
-        "imgDate" : imageDates[i] 
+        "Image Date" : imageDates[i],
+        "Image" : images[i] 
     })
 
 print(combinedData)
