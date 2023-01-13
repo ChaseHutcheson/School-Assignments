@@ -5,6 +5,7 @@ from kivy.uix.image import Image
 from kivy.graphics.texture import Texture
 from kivy.clock import Clock
 import cv2
+import datetime
 
 class MainApp(MDApp):
 
@@ -31,7 +32,7 @@ class MainApp(MDApp):
         self.image.texture = texture
 
     def take_picture(self, *args):
-        image_name = "picture_1.jpg"
+        image_name = f"{datetime.datetime.now()}.jpg"
         cv2.imwrite(image_name, self.image_frame)
 
 if __name__ == '__main__':
