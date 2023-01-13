@@ -32,8 +32,9 @@ class MainApp(MDApp):
         self.image.texture = texture
 
     def take_picture(self, *args):
-        image_name = f"{datetime.datetime.now()}.jpg"
-        cv2.imwrite(image_name, self.image_frame)
+        image_name = datetime.datetime.now().strftime('%m-%d-%y, %H;%M;%S') + ".jpg"
+        save_path = f"C:\\Users\\hutcheson_chase\\Documents\\GitHub\\School-Assignments\\All_School_Work\\Projects\\Capstone Project\\Images\\{image_name}"
+        cv2.imwrite(save_path, self.image_frame)
 
 if __name__ == '__main__':
     MainApp().run()
