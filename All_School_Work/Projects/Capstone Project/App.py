@@ -6,6 +6,7 @@ from kivy.graphics.texture import Texture
 from kivy.clock import Clock
 import cv2
 import datetime
+import time
 
 class MainApp(MDApp):
 
@@ -14,8 +15,8 @@ class MainApp(MDApp):
         self.image = Image()
         layout.add_widget(self.image)
         self.save_image_button = MDRaisedButton(
-            text='Take A Picture',
-            pos_hint={'center_x': .5, 'center_y': .5},
+            text='Translate',
+            pos_hint={'center_x': .25, 'center_y': .5},
             size_hint = (None, None))
         self.save_image_button.bind(on_press=self.take_picture)
         layout.add_widget(self.save_image_button)
@@ -33,8 +34,9 @@ class MainApp(MDApp):
 
     def take_picture(self, *args):
         image_name = datetime.datetime.now().strftime('%m-%d-%y, %H;%M;%S') + ".jpg"
-        save_path = f"C:\\Users\\hutcheson_chase\\Documents\\GitHub\\School-Assignments\\All_School_Work\\Projects\\Capstone Project\\Images\\{image_name}"
+        save_path = f"Images\\{image_name}"
         cv2.imwrite(save_path, self.image_frame)
+        self.image = Image(source=f"Images\\{image_name}")
 
 if __name__ == '__main__':
     MainApp().run()
