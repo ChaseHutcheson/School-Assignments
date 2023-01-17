@@ -11,18 +11,25 @@ import time
 class MainApp(MDApp):
 
     def build(self):
-        layout = MDBoxLayout(orientation = 'vertical')
+        self.layout = MDBoxLayout(orientation = 'vertical')
         self.image = Image()
-        layout.add_widget(self.image)
+        self.layout.add_widget(self.image)
         self.save_image_button = MDRaisedButton(
             text='Translate',
-            pos_hint={'center_x': .55, 'center_y': .5},
+            pos_hint={'center_x': .40, 'center_y': .5},
             size_hint = (None, None))
         self.save_image_button.bind(on_press=self.take_picture)
-        layout.add_widget(self.save_image_button)
+        self.new_image_button = MDRaisedButton(
+            text = 'Back',
+            pos_hint={'center_x': .80, 'center_y': .5},
+            size_hint=(None, None))
+        self.new_image_button.bind(on_press=self.load_video)
+        self.layout.add_widget(self.save_image_button)
+        self.layout.add_widget(self.new_image_button)
         self.capture = cv2.VideoCapture(0)
-        Clock.schedule_interval(self.load_video, 1.0/30.0)
-        return layout
+        self.camera = Clock.schedule_interval(self.load_video, 1.0/30.0)
+        self.camera
+        return self.layout
 
     def load_video(self, *args):
         ret, frame = self.capture.read()
@@ -36,7 +43,13 @@ class MainApp(MDApp):
         image_name = datetime.datetime.now().strftime('%m-%d-%y, %H;%M;%S') + ".jpg"
         save_path = f"Images\\{image_name}"
         cv2.imwrite(save_path, self.image_frame)
-        self.image = Image(source=f"Images\\{image_name}")
+        self.display_images = Image(source=f"Images\\{image_name}")  
+        self.layout.add_widget(self.display_images)       
+
+    def new_picture(self, *args):
+        self.layout.remove_widget(Image())
+        Clock.schedule_interval(self.load_video, 1.0/30.0)
+
 
 if __name__ == '__main__':
     MainApp().run()
