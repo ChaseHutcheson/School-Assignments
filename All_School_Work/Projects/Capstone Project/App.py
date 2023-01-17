@@ -16,7 +16,7 @@ class MainApp(MDApp):
         layout.add_widget(self.image)
         self.save_image_button = MDRaisedButton(
             text='Translate',
-            pos_hint={'center_x': .25, 'center_y': .5},
+            pos_hint={'center_x': .55, 'center_y': .5},
             size_hint = (None, None))
         self.save_image_button.bind(on_press=self.take_picture)
         layout.add_widget(self.save_image_button)
