@@ -7,7 +7,8 @@ from kivy.graphics.texture import Texture
 from kivy.clock import Clock
 import cv2
 import datetime
-import pytesseract as pyt
+import pytesseract
+from PIL import Image as imunge
 import argparse
 
 
@@ -38,7 +39,7 @@ class MainApp(MDApp):
     def load_video(self, *args):
         ret, frame = self.capture.read()
         self.image_frame = frame 
-        buffer = cv2.flip(frame, 0).tobytes()
+        buffer = cv2.flip(frame, -1).tobytes()
         texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='bgr')
         texture.blit_buffer(buffer, colorfmt='bgr', bufferfmt='ubyte')
         self.image.texture = texture
@@ -46,19 +47,18 @@ class MainApp(MDApp):
     def take_picture(self, *args):
         image_name = datetime.datetime.now().strftime('%m-%d-%y, %H;%M;%S') + ".jpg"
         save_path = f"Images\\{image_name}"
-        cv2.imwrite(save_path, self.image_frame)
+        cv2.imwrite(save_path, cv2.flip(self.image_frame, 2))
         self.display_images = Image(source=f"Images\\{image_name}")
         self.layout.add_widget(self.display_images)
         self.save_image_button.disabled = True
         self.new_image_button.disabled = False
-        translate_image = cv2.cvtColor(self.image_frame, cv2.COLOR_BGR2GRAY)
-        translate_image = cv2.GaussianBlur(translate_image, (3, 3), 0)
-        translate_image = cv2.threshold(translate_image, 0, 255, cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
-        translated_text = pyt.image_to_string(translate_image, config="--psm 6")
+        pytesseract.pytesseract.tesseract_cmd = r'C:\\Users\\hutcheson_chase\AppData\\Local\\Programs\\Tesseract-OCR'
+        untranslated_image = imunge.open(save_path)
+        translated_text = pytesseract.image_to_string(untranslated_image)
         text_label = Label()
         text_label.text = translated_text
         self.layout.add_widget(text_label)
-
+# "C:\Users\hutcheson_chase\AppData\Local\Programs\Tesseract-OCR"
     def new_picture(self, *args):
         self.layout.remove_widget(self.display_images)
         self.save_image_button.disabled = False
