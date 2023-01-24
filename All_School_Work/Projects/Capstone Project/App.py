@@ -17,6 +17,7 @@ class MainApp(MDApp):
     def build(self):
         self.layout = MDFloatLayout()
         self.image = Image()
+        self.text_label = Label()
         self.layout.add_widget(self.image)
         self.save_image_button = MDRaisedButton(
             text='Translate',
@@ -55,9 +56,8 @@ class MainApp(MDApp):
         pytesseract.pytesseract.tesseract_cmd = r'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
         untranslated_image = imunge.open(save_path)
         translated_text = pytesseract.image_to_string(untranslated_image)
-        text_label = Label()
-        text_label.text = translated_text
-        self.layout.add_widget(text_label)
+        self.text_label = Label(text = "Amogus")
+        self.layout.add_widget(self.text_label)
 # School Computer Path: "C:\Users\hutcheson_chase\AppData\Local\Programs\Tesseract-OCR\forgot exe file"
 # Laptop Path: "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
     def new_picture(self, *args):
