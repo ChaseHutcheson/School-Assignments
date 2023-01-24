@@ -52,7 +52,7 @@ class MainApp(MDApp):
         self.layout.add_widget(self.display_images)
         self.save_image_button.disabled = True
         self.new_image_button.disabled = False
-        pytesseract.pytesseract.tesseract_cmd = r'C:\\Users\\hutcheson_chase\AppData\\Local\\Programs\\Tesseract-OCR'
+        pytesseract.pytesseract.tesseract_cmd = r'C:\\Users\\hutcheson_chase\\AppData\\Local\\Programs\\Tesseract-OCR'
         untranslated_image = imunge.open(save_path)
         translated_text = pytesseract.image_to_string(untranslated_image)
         text_label = Label()
