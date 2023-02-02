@@ -5,11 +5,11 @@ from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.graphics.texture import Texture
 from kivy.clock import Clock
+from kivy.config import Config
 import cv2
 import datetime
 import pytesseract
 from PIL import Image as imunge
-import argparse
 
 
 class MainApp(MDApp):
@@ -53,13 +53,13 @@ class MainApp(MDApp):
         self.layout.add_widget(self.display_images)
         self.save_image_button.disabled = True
         self.new_image_button.disabled = False
-        pytesseract.pytesseract.tesseract_cmd = r'C:\\Users\\hutcheson_chase\\AppData\\Local\\Programs\\Tesseract-OCR'
-        untranslated_image = imunge.open(save_path)
+        pytesseract.pytesseract.tesseract_cmd = "C:\\Users\\hutcheson_chase\\AppData\\Local\Programs\\Tesseract-OCR\\tesseract.exe"
+        untranslated_image = imunge.open(str(save_path))
         translated_text = pytesseract.image_to_string(untranslated_image)
-        self.text_label = Label(text = "Amogus")
+        self.text_label = Label(text = translated_text)
         self.layout.add_widget(self.text_label)
-# School Computer Path: "C:\Users\hutcheson_chase\AppData\Local\Programs\Tesseract-OCR\forgot exe file"
-# Laptop Path: "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+#       School Computer Path: "C:\\Users\\hutcheson_chase\\AppData\\Local\Programs\\Tesseract-OCR\\tesseract.exe"
+#       Laptop Path: "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
     def new_picture(self, *args):
         self.layout.remove_widget(self.display_images)
         self.save_image_button.disabled = False
