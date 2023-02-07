@@ -1,6 +1,7 @@
 from kivymd.app import MDApp
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.uix.button import MDFillRoundFlatIconButton
+from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.uix.image import Image
 from kivy.uix.label import Label
@@ -19,12 +20,14 @@ from PIL import Image as imunge
 class MainApp(MDApp):
 
     def build(self):
+        Window.clearcolor = (213, 255, 254, 0.8)
+
         #Defines Layout
         self.layout = FloatLayout()
 
         #Camera Image Widget
         self.image = Image(
-            pos_hint={"x":0, "center_y":.8},
+            pos_hint={"x":0, "top":1},
         )
         self.layout.add_widget(self.image)
 
@@ -78,11 +81,10 @@ class MainApp(MDApp):
         save_path = f"Images\\{image_name}"
         cv2.imwrite(save_path, cv2.flip(self.image_frame, 2))
         
-        #
         self.display_images = Image(source=f"Images\\{image_name}")
         self.save_image_button.disabled = True
         self.new_image_button.disabled = False
-        pytesseract.pytesseract.tesseract_cmd = "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+        pytesseract.pytesseract.tesseract_cmd = "C:\\Users\\hutcheson_chase\\AppData\\Local\Programs\\Tesseract-OCR\\tesseract.exe"
         untranslated_image = imunge.open(str(save_path))
         translated_text = pytesseract.image_to_string(untranslated_image)
         self.text_label.text = translated_text
