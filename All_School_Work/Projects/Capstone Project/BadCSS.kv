@@ -1,21 +1,29 @@
 <MyFloat>:
-    Image:
-        source:''
 
-    Button:
-        id: image_save_button
-        icon:'translate'
-        text:'Translate'
-        # size_hint: .20,.20
-        # pos_hint: {'left':.25,'top':.1}
-        # on_press: root.take_picture()
+    BoxLayout:
+        orientation: 'vertical'
 
-    Button:
-        id: image_back_button
-        icon:'translate'
-        text:'Back'
-        pos_hint: {'right':.25,'top':.1}
-        on_press: root.take_picture()
+        Kamera:
+            id: camera_display
+
+        FloatLayout:
+            orientation: 'horizontal'
+
+            Button:
+                id: image_save_button
+                icon:'translate'
+                text:'Translate'
+                size_hint: .20,.10
+                pos_hint: {'right':.25,'top':.1}
+                # on_press: root.take_picture()
+
+            Button:
+                id: image_back_button
+                icon:'translate'
+                text:'Back'
+                size_hint: .20,.10
+                pos_hint: {'right':.95,'top':.1}
+                on_press: root.take_picture()
 
 
             

@@ -68,7 +68,7 @@ class MainApp(MDApp):
     def load_video(self, *args):
         ret, frame = self.capture.read()
         self.image_frame = frame 
-        buffer = cv2.flip(frame, 0).tobytes()
+        buffer = cv2.flip(frame, -1).tobytes()
         texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='bgr')
         texture.blit_buffer(buffer, colorfmt='bgr', bufferfmt='ubyte')
         self.image.texture = texture
